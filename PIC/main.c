@@ -30,7 +30,7 @@ void main(void)
             
             hum_data = I2C1_Read1ByteRegister(HTU31_I2C_ADDR, HTU31_REG);
             
-            int hum = (float)data * 100 / 255;
+            int hum = (float)hum_data * 100 / 255;
         
             printf("Data Value: %u\n\r", hum);
         }
