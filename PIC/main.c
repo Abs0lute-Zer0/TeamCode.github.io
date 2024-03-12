@@ -5,8 +5,8 @@
 #include <stdio.h>
 
 //humidity sensor info
-#define AS5600_I2C_ADDR 0x40
-#define AS5600_REG 0x0D
+#define HTU31_I2C_ADDR 0x40
+#define HTU31_REG 0x0D
 
 
 void main(void)
@@ -19,7 +19,7 @@ void main(void)
 
     while (1)
     {
-        i2c1_error_t result = I2C1_Open(AS5600_I2C_ADDR);
+        i2c1_error_t result = I2C1_Open(HTU31_I2C_ADDR);
         
         __delay_ms(10);
 
@@ -28,7 +28,7 @@ void main(void)
             printf("Success! \n\r");
             __delay_ms(100);
             
-            data = I2C1_Read1ByteRegister(AS5600_I2C_ADDR, AS5600_REG);
+            data = I2C1_Read1ByteRegister(HTU31_I2C_ADDR, HTU31_REG);
             
             int hum = (float)data * 100 / 255;
         
