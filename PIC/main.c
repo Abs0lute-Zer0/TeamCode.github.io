@@ -4,7 +4,8 @@
 #include <stdint.h>
 #include <stdio.h>
 
-#define AS5600_I2C_ADDR 0x36
+//humidity sensor info
+#define AS5600_I2C_ADDR 0x40
 #define AS5600_REG 0x0D
 
 
@@ -29,9 +30,9 @@ void main(void)
             
             data = I2C1_Read1ByteRegister(AS5600_I2C_ADDR, AS5600_REG);
             
-            int angle = (float)data * 16 / 4096 * 360;
+            int hum = (float)data * 100 / 255;
         
-            printf("Data Value: %u\n\r", angle);
+            printf("Data Value: %u\n\r", hum);
         }
         else if (result == I2C1_BUSY)
         {
