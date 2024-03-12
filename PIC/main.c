@@ -15,7 +15,7 @@ void main(void)
     EUSART2_Initialize();
     I2C1_Initialize();
 
-    uint8_t data;
+    uint8_t hum_data;
 
     while (1)
     {
@@ -28,7 +28,7 @@ void main(void)
             printf("Success! \n\r");
             __delay_ms(100);
             
-            data = I2C1_Read1ByteRegister(HTU31_I2C_ADDR, HTU31_REG);
+            hum_data = I2C1_Read1ByteRegister(HTU31_I2C_ADDR, HTU31_REG);
             
             int hum = (float)data * 100 / 255;
         
