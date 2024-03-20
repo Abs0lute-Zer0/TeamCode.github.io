@@ -46,3 +46,49 @@ void main(void)
         }
     }
 }
+
+
+#define HTU31D_ADDR 0x40
+#define HTU31D_REG 0x08
+
+void main(void)
+{
+    SYSTEM_Initialize();
+    EUSART2_Initialize();
+    I2C1_Initialize(); 
+    
+    __delay_ms(10);
+    
+    uint8_t data;
+    
+    LED_SetHigh();
+    
+    while (1)
+    {
+        I2C1_Open(HTU31D_ADDR);
+        
+        __delay_ms(10);
+        
+        //I2C1_ReadNBytes(i2c1_address_t 0x40, uint8_t 0x08, size_t 1);
+        while(!I2C1_Open(0x40)); // sit here until we get the bus..
+        I2C1_SetBuffer(0x08,1);
+        I2C1_SetAddressNackCallback(NULL,NULL); //NACK polling?
+        I2C1_MasterWrite();
+        while(I2C1_BUSY == I2C1_Close()); // sit here until finished.
+
+        __delay_ms(10);
+        
+        while(!I2C1_Open(0x40)); // sit here until we get the bus..
+        I2C1_SetBuffer(0x08,1);
+        data = I2C1_MasterRead();
+        while(I2C1_BUSY == I2C1_Close()); // sit here until finished.
+                       
+        //float hum = (float)data * 100 /(255);
+        __delay_ms(10);
+
+        printf("Data Value: %u\n\r", data);
+        
+        __delay_ms(10);
+
+    }
+}
